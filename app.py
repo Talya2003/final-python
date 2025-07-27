@@ -7,6 +7,9 @@ from resources.store import Store, StoreList, store_ns, stores_ns
 from resources.item import Item, ItemList, items_ns, item_ns
 from marshmallow import ValidationError
 
+from flask import render_template_string
+
+
 app = Flask(__name__)
 bluePrint = Blueprint('api', __name__, url_prefix='/api')
 api = Api(bluePrint, doc='/doc', title='Sample Flask-RestPlus Application')
@@ -26,6 +29,20 @@ api.add_namespace(stores_ns)
 def create_tables():
     db.create_all()
 
+@app.route('/')
+def index():
+    return render_template_string('''
+        <html>
+        <head><title>API Status</title></head>
+        <body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
+            <h1>✅ API is running</h1>
+            <p>Click below to open the <b>Swagger UI</b></p>
+            <a href="/api/doc">
+                <button style="padding: 10px 20px; font-size: 16px;">Go to Swagger</button>
+            </a>
+        </body>
+        </html>
+    ''')
 
 @api.errorhandler(ValidationError)
 def handle_validation_error(error):
