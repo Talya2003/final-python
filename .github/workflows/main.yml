@@ -1,3 +1,8 @@
+# This GitHub Actions workflow is used for CI/CD:
+# It builds the Docker image and pushes it to Docker Hub.
+# Although named 'appspec.yml', this is not related to AWS CodeDeploy.
+# File located in: .github/workflows/appspec.yml
+
 name: Build
 on:
   push:
