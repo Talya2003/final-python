@@ -27,7 +27,7 @@ jobs:
       uses: docker/login-action@v2
       with: 
         username: ${{ secrets.DOCKER_HUB_USER }} # Docker Hub username (stored in GitHub Secrets)
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }} # Docker Hub password or token (stored in GitHub Secrets)
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }} # Docker Hub token (stored in GitHub Secrets)
         
     # Step 4 — Build the Docker image with a dynamic tag
     - name: Build the Docker image
