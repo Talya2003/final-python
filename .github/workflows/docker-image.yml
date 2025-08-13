@@ -33,6 +33,14 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag docker.io/talyakazayof/final-python:${{ github.run_number }}-${{ github.sha }}
 
+    # added option of tag=latest
+    - name: Build image with latest tag
+      run: docker build . --file Dockerfile --tag talyakazayof/final-python:latest
+
+    - name: Push latest image
+      run: docker push talyakazayof/final-python:latest
+
+
     # Step 5 — Push the Docker image to Docker Hub
     - name: Push the Docker image
       run: docker push docker.io/talyakazayof/final-python:${{ github.run_number }}-${{ github.sha }}
