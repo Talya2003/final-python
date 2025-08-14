@@ -1,0 +1,46 @@
+# Name of the workflow that will appear in GitHub Actions
+name: Docker Image CI
+
+# Events that trigger the workflow
+on:
+  push: # Runs automatically when pushing to the main branch
+    branches: [ "main" ]
+  pull_request: # Runs automatically for pull requests to main
+    branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+
+  build: # Job name
+    runs-on: ubuntu-latest # Operating system where the job will run
+
+    steps:
+    # Step 1 — Check out the repository code
+    - uses: actions/checkout@v4
+
+    # Step 2 — Set up Docker Buildx (advanced Docker image building)
+    - name: Setup Docker buildx
+      uses: docker/setup-buildx-action@v3
+    
+    # Step 3 — Log in to Docker Hub
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with: 
+        username: ${{ secrets.DOCKER_HUB_USER }} # Docker Hub username (stored in GitHub Secrets)
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }} # Docker Hub token (stored in GitHub Secrets)
+        
+    # Step 4 — Build the Docker image with a dynamic tag
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag docker.io/talyakazayof/final-python:${{ github.run_number }}-${{ github.sha }}
+
+    # added option of tag=latest
+    - name: Build image with latest tag
+      run: docker build . --file Dockerfile --tag talyakazayof/final-python:latest
+
+    - name: Push latest image
+      run: docker push talyakazayof/final-python:latest
+
+
+    # Step 5 — Push the Docker image to Docker Hub
+    - name: Push the Docker image
+      run: docker push docker.io/talyakazayof/final-python:${{ github.run_number }}-${{ github.sha }}
