@@ -1,0 +1,28 @@
+# Git files
+.git
+.gitignore
+
+# Unnessacery Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# log files
+*.log
+
+# virtual environments
+venv/
+env/
+.venv/
+
+# IDE files
+.vscode/
+.idea/
+
+# system files
+.DS_Store
+Thumbs.db
+
+# dockerignore
+.dockerignore
